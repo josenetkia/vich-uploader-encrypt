@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncryp\Cryptography\VichUploader\Mapping;
+namespace VichUploaderEncryp\VichUploader\Mapping;
 
 use Vich\UploaderBundle\Mapping\Annotation\UploadableField as BaseUploadableField;
 

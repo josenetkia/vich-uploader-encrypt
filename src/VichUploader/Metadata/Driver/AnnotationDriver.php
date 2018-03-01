@@ -1,11 +1,11 @@
 <?php
 
-namespace VichUploaderEncryp\Cryptography\VichUploader\Metadata\Driver;
+namespace VichUploaderEncryp\VichUploader\Metadata\Driver;
 
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 use Metadata\Driver\AdvancedDriverInterface;
 use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
-use VichUploaderEncryp\Cryptography\VichUploader\Mapping\UploadableField;
+use VichUploaderEncryp\VichUploader\Mapping\UploadableField;
 use Vich\UploaderBundle\Metadata\ClassMetadata;
 
 /**

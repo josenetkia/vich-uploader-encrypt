@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncryp\Cryptography\VichUploader\Metadata\Driver;
+namespace VichUploaderEncryp\VichUploader\Metadata\Driver;
 
 use Metadata\Driver\AbstractFileDriver;
 use Symfony\Component\Config\Util\XmlUtils;

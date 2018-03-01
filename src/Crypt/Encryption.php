@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncryp\Cryptography\Crypt;
+namespace VichUploaderEncryp\Crypt;
 
 class Encryption
 {

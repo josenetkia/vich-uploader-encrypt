@@ -1,12 +1,12 @@
 <?php
 
-namespace VichUploaderEncryp\Cryptography\VichUploader\Handler;
+namespace VichUploaderEncryp\VichUploader\Handler;
 
-use VichUploaderEncryp\Cryptography\VichUploader\Traits\Encrypt;
+use VichUploaderEncryp\VichUploader\Traits\Encrypt;
 use Vich\UploaderBundle\Handler\DownloadHandler as BaseHandler;
 use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 use Vich\UploaderBundle\Storage\StorageInterface;
-use VichUploaderEncryp\Cryptography\Crypt\Encryption;
+use VichUploaderEncryp\Crypt\Encryption;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Vich\UploaderBundle\Exception\NoFileFoundException;

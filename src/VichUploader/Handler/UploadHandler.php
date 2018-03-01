@@ -1,11 +1,11 @@
 <?php
 
-namespace VichUploaderEncryp\Cryptography\VichUploader\Handler;
+namespace VichUploaderEncryp\VichUploader\Handler;
 
-use VichUploaderEncryp\Cryptography\VichUploader\Traits\Encrypt;
+use VichUploaderEncryp\VichUploader\Traits\Encrypt;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Vich\UploaderBundle\Handler\UploadHandler as BaseHandler;
-use VichUploaderEncryp\Cryptography\Crypt\Encryption;
+use VichUploaderEncryp\Crypt\Encryption;
 use Vich\UploaderBundle\Event\Event;
 use Vich\UploaderBundle\Event\Events;
 use Vich\UploaderBundle\Injector\FileInjectorInterface;
