@@ -81,7 +81,11 @@ class EncryptFileCommand extends Command
                 $data[] = $uploadDestination;
             }
         }
-
+        
+        if (empty($data)) {
+            return;
+        }
+        
         $finder = new Finder();
         $finder->files()->in($data);
         $progress = new ProgressBar($output, $finder->count());
