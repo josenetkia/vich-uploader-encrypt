@@ -1,7 +1,7 @@
 Install
 
 ```
-composer require tobur/vich-uploader-encrypt v0.1
+composer require tobur/vich-uploader-encrypt v0.3
 ```
 
 ```
