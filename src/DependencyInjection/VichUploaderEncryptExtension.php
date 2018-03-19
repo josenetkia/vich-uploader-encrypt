@@ -29,6 +29,6 @@ class VichUploaderEncryptExtension extends Extension
      */
     public function getAlias()
     {
-        return 'vich_uploader_encryp';
+        return 'vich_uploader_encrypt';
     }
 }
