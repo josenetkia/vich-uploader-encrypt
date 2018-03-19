@@ -1,17 +1,17 @@
 Install
 
 ```
-composer require tobur/vich-uploader-encryp v0.1
+composer require tobur/vich-uploader-encrypt v0.1
 ```
 
 ```
-VichUploaderEncryp\VichUploaderEncrypBundle::class => ['all' => true],
+VichUploaderEncryp\VichUploaderEncryptBundle::class => ['all' => true],
 ```
 
 
 Create vich_uploader_encryp.yaml for configure bundle:
 ```
-vich_uploader_encryp:
+vich_uploader_encrypt:
       encryption_key: some key for encrypt
       encryption_vi: some vi for encrypt
 ```

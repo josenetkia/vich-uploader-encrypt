@@ -14,7 +14,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('vich_uploader_encryp');
+        $rootNode = $treeBuilder->root('vich_uploader_encrypt');
 
         $rootNode
             ->children()
