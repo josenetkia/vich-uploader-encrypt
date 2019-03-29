@@ -4,39 +4,28 @@ services:
         autoconfigure: true
         public: false
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    VichUploaderEncrypt\:
-        resource: './../*'
-        exclude: './../{Model,Migrations,Tests,Kernel.php}'
-
     vich_uploader.download_handler:
-        class: VichUploaderEncrypt\VichUploader\Handler\DownloadHandler
+        class: SfCod\VichUploaderEncrypt\VichUploader\Handler\DownloadHandler
         public: true
 
     vich_uploader.upload_handler:
-        class: VichUploaderEncrypt\VichUploader\Handler\UploadHandler
+        class: SfCod\VichUploaderEncrypt\VichUploader\Handler\UploadHandler
         public: true
 
     vich_uploader.metadata_driver.annotation:
-        class: VichUploaderEncrypt\VichUploader\Metadata\Driver\AnnotationDriver
+        class: SfCod\VichUploaderEncrypt\VichUploader\Metadata\Driver\AnnotationDriver
         arguments:
            - '@annotation_reader'
 
     vich_uploader.metadata_driver.xml:
-        class: VichUploaderEncrypt\VichUploader\Metadata\Driver\XmlDriver
+        class: SfCod\VichUploaderEncrypt\VichUploader\Metadata\Driver\XmlDriver
         arguments:
            - '@vich_uploader.metadata.file_locator'
 
     vich_uploader.metadata_driver.yaml:
-        class: VichUploaderEncrypt\VichUploader\Metadata\Driver\YamlDriver
+        class: SfCod\VichUploaderEncrypt\VichUploader\Metadata\Driver\YamlDriver
         arguments:
             - '@vich_uploader.metadata.file_locator'
 
-    VichUploaderEncrypt\Command\EncryptFileCommand:
-        arguments:
-            - null
-            - '@VichUploaderEncrypt\Crypt\Encryption'
-            - '%vich_uploader.mappings%'
-        tags:
-            - { name: 'console.command' }
+    Vich\UploaderBundle\Injector\FileInjectorInterface:
+        alias: vich_uploader.file_injector

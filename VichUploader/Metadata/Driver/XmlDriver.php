@@ -4,7 +4,7 @@ namespace SfCod\VichUploaderEncrypt\VichUploader\Metadata\Driver;
 
 use Metadata\Driver\AbstractFileDriver;
 use Symfony\Component\Config\Util\XmlUtils;
-use Vich\UploaderBundle\Metadata\ClassMetadata;
+use Metadata\ClassMetadata;
 
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Metadata\ClassMetadata;
  */
 class XmlDriver extends AbstractFileDriver
 {
-    protected function loadMetadataFromFile(\ReflectionClass $class, $file)
+    protected function loadMetadataFromFile(\ReflectionClass $class, string $file): ?ClassMetadata
     {
         $elem = XmlUtils::loadFile($file);
         $elem = simplexml_import_dom($elem);
@@ -24,17 +24,17 @@ class XmlDriver extends AbstractFileDriver
 
         foreach ($elem->children() as $field) {
             $fieldMetadata = [
-                'mapping' => (string) $field->attributes()->mapping,
-                'propertyName' => (string) $field->attributes()->name,
-                'fileNameProperty' => (string) $field->attributes()->filename_property,
-                'size' => (string) $field->attributes()->size,
-                'mimeType' => (string) $field->attributes()->mime_type,
-                'originalName' => (string) $field->attributes()->original_name,
+                'mapping' => (string)$field->attributes()->mapping,
+                'propertyName' => (string)$field->attributes()->name,
+                'fileNameProperty' => (string)$field->attributes()->filename_property,
+                'size' => (string)$field->attributes()->size,
+                'mimeType' => (string)$field->attributes()->mime_type,
+                'originalName' => (string)$field->attributes()->original_name,
                 'dimensions' => $field->attributes()->dimensions,
                 'encrypted' => $field->attribute()->encrypted
             ];
 
-            $classMetadata->fields[(string) $field->attributes()->name] = $fieldMetadata;
+            $classMetadata->fields[(string)$field->attributes()->name] = $fieldMetadata;
         }
 
         return $classMetadata;
@@ -43,7 +43,7 @@ class XmlDriver extends AbstractFileDriver
     /**
      * {@inheritdoc}
      */
-    protected function getExtension()
+    protected function getExtension(): string
     {
         return 'xml';
     }
@@ -51,10 +51,10 @@ class XmlDriver extends AbstractFileDriver
     protected function guessClassName($file, \SimpleXMLElement $elem, \ReflectionClass $class = null)
     {
         if (null === $class) {
-            return (string) $elem->attributes()->class;
+            return (string)$elem->attributes()->class;
         }
 
-        if ($class->name !== (string) $elem->attributes()->class) {
+        if ($class->name !== (string)$elem->attributes()->class) {
             throw new \RuntimeException(sprintf('Expected metadata for class %s to be defined in %s.', $class->name, $file));
         }
 

@@ -2,11 +2,11 @@
 
 namespace SfCod\VichUploaderEncrypt\VichUploader\Handler;
 
-use VichUploaderEncrypt\VichUploader\Traits\Encrypt;
+use SfCod\VichUploaderEncrypt\VichUploader\Traits\Encrypt;
 use Vich\UploaderBundle\Handler\DownloadHandler as BaseHandler;
 use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 use Vich\UploaderBundle\Storage\StorageInterface;
-use VichUploaderEncrypt\Crypt\Encryption;
+use SfCod\VichUploaderEncrypt\Crypt\Encryption;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Vich\UploaderBundle\Exception\NoFileFoundException;

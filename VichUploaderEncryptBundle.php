@@ -3,7 +3,7 @@
 namespace SfCod\VichUploaderEncrypt;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use VichUploaderEncrypt\DependencyInjection\VichUploaderEncryptExtension;
+use SfCod\VichUploaderEncrypt\DependencyInjection\VichUploaderEncryptExtension;
 
 class VichUploaderEncryptBundle extends Bundle
 {

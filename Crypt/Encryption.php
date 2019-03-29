@@ -30,6 +30,7 @@ class Encryption
 
     /**
      * @param string $data
+     *
      * @return bool|mixed|string
      */
     public function encrypt(string $data)
@@ -39,6 +40,7 @@ class Encryption
 
     /**
      * @param string $data
+     *
      * @return bool|mixed|string
      */
     public function decrypt(string $data)
@@ -58,10 +60,10 @@ class Encryption
         $key = hash('sha256', $this->secretKey);
         // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
         $iv = substr(hash('sha256', $this->secretIv), 0, 16);
-        if ( $action == static::ACTION_ENCRYPT ) {
+        if ($action == static::ACTION_ENCRYPT) {
             $output = openssl_encrypt($string, static::ENCRYPT_METHOD, $key, 0, $iv);
             $output = base64_encode($output);
-        } else if( $action == static::ACTION_DECRYPT) {
+        } else if ($action == static::ACTION_DECRYPT) {
             $output = openssl_decrypt(base64_decode($string), static::ENCRYPT_METHOD, $key, 0, $iv);
         }
 

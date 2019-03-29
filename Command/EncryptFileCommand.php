@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Finder\Finder;
-use VichUploaderEncrypt\Crypt\Encryption;
+use SfCod\VichUploaderEncrypt\Crypt\Encryption;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -28,9 +28,10 @@ class EncryptFileCommand extends Command
      * @param Encryption $encryption
      * @param array $vichUploaderMappings
      */
-    public function __construct(?string $name = null, Encryption $encryption, array $vichUploaderMappings)
+    public function __construct(Encryption $encryption, array $vichUploaderMappings)
     {
-        parent::__construct($name);
+        parent::__construct();
+
         $this->vichUploaderMappings = $vichUploaderMappings;
         $this->encryption = $encryption;
     }
