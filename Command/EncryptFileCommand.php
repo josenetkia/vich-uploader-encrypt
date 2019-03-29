@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt\Command;
+namespace SfCod\VichUploaderEncrypt\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

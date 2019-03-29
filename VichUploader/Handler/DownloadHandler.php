@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt\VichUploader\Handler;
+namespace SfCod\VichUploaderEncrypt\VichUploader\Handler;
 
 use VichUploaderEncrypt\VichUploader\Traits\Encrypt;
 use Vich\UploaderBundle\Handler\DownloadHandler as BaseHandler;
@@ -50,15 +50,10 @@ class DownloadHandler extends BaseHandler
      * @throws NoFileFoundException
      * @throws \InvalidArgumentException
      */
-    public function downloadObject(
-        $object,
-        string $field,
-        ?string $className = null,
-        $fileName = false
-    ): StreamedResponse {
+    public function downloadObject($object, string $field, ?string $className = null, $fileName = null, bool $forceDownload = true): StreamedResponse {
         $mapping = $this->getMapping($object, $field, $className);
         if (!$this->isEncryptFile($mapping)) {
-            return parent::downloadObject($object, $field, $className, $fileName);
+            return parent::downloadObject($object, $field, $className, $fileName, $forceDownload);
         }
 
         if (true === $fileName) {
@@ -72,16 +67,18 @@ class DownloadHandler extends BaseHandler
             throw new NoFileFoundException(sprintf('No file found in field "%s".', $field));
         }
 
-        return $this->createResponse($realPath, $responseFileName, $mapping->getFile($object));
+        return $this->createResponse($realPath, $responseFileName, $mapping->getFile($object), $forceDownload);
     }
 
     /**
+     * Create streamed response
+     *
      * @param string $realPath
      * @param string $fileName
      * @param null|File $file
      * @return StreamedResponse
      */
-    protected function createResponse(string $realPath, string $fileName, ?File $file): StreamedResponse
+    protected function createResponse(string $realPath, string $fileName, ?File $file, bool $forceDownload = true): StreamedResponse
     {
         $newRealPath = tempnam(sys_get_temp_dir(), 'download_');
         file_put_contents($newRealPath, $this->encryption->decrypt(file_get_contents($realPath)));
@@ -93,7 +90,7 @@ class DownloadHandler extends BaseHandler
         });
 
         $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $forceDownload ? ResponseHeaderBag::DISPOSITION_ATTACHMENT : ResponseHeaderBag::DISPOSITION_INLINE,
             Transliterator::transliterate($fileName)
         );
         $response->headers->set('Content-Disposition', $disposition);

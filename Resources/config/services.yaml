@@ -7,13 +7,8 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     VichUploaderEncrypt\:
-        resource: './../../*'
-        exclude: './../../{Model,Migrations,Tests,Kernel.php}'
-
-    VichUploaderEncrypt\Crypt\Encryption:
-        arguments:
-          - '%vich_uploader_encryption.key%'
-          - '%vich_uploader_encryption.vi%'
+        resource: './../*'
+        exclude: './../{Model,Migrations,Tests,Kernel.php}'
 
     vich_uploader.download_handler:
         class: VichUploaderEncrypt\VichUploader\Handler\DownloadHandler
@@ -25,19 +20,16 @@ services:
 
     vich_uploader.metadata_driver.annotation:
         class: VichUploaderEncrypt\VichUploader\Metadata\Driver\AnnotationDriver
-        public: false
         arguments:
            - '@annotation_reader'
 
     vich_uploader.metadata_driver.xml:
         class: VichUploaderEncrypt\VichUploader\Metadata\Driver\XmlDriver
-        public: false
         arguments:
            - '@vich_uploader.metadata.file_locator'
 
     vich_uploader.metadata_driver.yaml:
         class: VichUploaderEncrypt\VichUploader\Metadata\Driver\YamlDriver
-        public: false
         arguments:
             - '@vich_uploader.metadata.file_locator'
 

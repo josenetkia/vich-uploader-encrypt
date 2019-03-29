@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt\VichUploader\Metadata\Driver;
+namespace SfCod\VichUploaderEncrypt\VichUploader\Metadata\Driver;
 
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 use Metadata\Driver\AdvancedDriverInterface;

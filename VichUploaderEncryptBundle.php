@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt;
+namespace SfCod\VichUploaderEncrypt;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use VichUploaderEncrypt\DependencyInjection\VichUploaderEncryptExtension;

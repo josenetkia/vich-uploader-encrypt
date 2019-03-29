@@ -1,14 +1,13 @@
 {
-  "name": "sfcod/vich-uploader-encrypt",
-  "type": "symfony-bundle",
-  "require": {
-    "php": "^7.1.3",
-    "vich/uploader-bundle": "^1.9"
-  },
-  "autoload": {
-    "psr-4": {
-      "VichUploaderEncrypt\\": "src/",
-      "": "src/"
+    "name": "sfcod/vich-uploader-encrypt",
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^7.1.3",
+        "vich/uploader-bundle": "^1.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "SfCod\\VichUploaderEncrypt\\": ""
+        }
     }
-  }
 }

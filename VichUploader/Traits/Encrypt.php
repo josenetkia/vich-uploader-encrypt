@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt\VichUploader\Traits;
+namespace SfCod\VichUploaderEncrypt\VichUploader\Traits;
 
 use Vich\UploaderBundle\Mapping\PropertyMapping;
 

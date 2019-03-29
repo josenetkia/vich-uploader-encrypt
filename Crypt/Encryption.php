@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt\Crypt;
+namespace SfCod\VichUploaderEncrypt\Crypt;
 
 class Encryption
 {

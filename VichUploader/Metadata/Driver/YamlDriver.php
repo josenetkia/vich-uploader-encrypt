@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt\VichUploader\Metadata\Driver;
+namespace SfCod\VichUploaderEncrypt\VichUploader\Metadata\Driver;
 
 use Metadata\Driver\AbstractFileDriver;
 use Symfony\Component\Yaml\Yaml as YmlParser;

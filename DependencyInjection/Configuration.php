@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt\DependencyInjection;
+namespace SfCod\VichUploaderEncrypt\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -14,7 +14,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('vich_uploader_encrypt');
+        $rootNode = $treeBuilder->root('sfcod_vich_uploader_encrypt');
 
         $rootNode
             ->children()

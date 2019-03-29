@@ -1,6 +1,6 @@
 <?php
 
-namespace VichUploaderEncrypt\VichUploader\Handler;
+namespace SfCod\VichUploaderEncrypt\VichUploader\Handler;
 
 use VichUploaderEncrypt\VichUploader\Traits\Encrypt;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
