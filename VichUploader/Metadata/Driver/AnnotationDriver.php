@@ -6,7 +6,8 @@ use Doctrine\Common\Annotations\Reader as AnnotationReader;
 use Metadata\Driver\AdvancedDriverInterface;
 use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 use SfCod\VichUploaderEncrypt\VichUploader\Mapping\UploadableField;
-use Metadata\ClassMetadata;
+use Metadata\ClassMetadata as JSMClassMetadata;
+use Vich\UploaderBundle\Metadata\ClassMetadata;
 
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
@@ -31,7 +32,7 @@ class AnnotationDriver implements AdvancedDriverInterface
         $this->reader = $reader;
     }
 
-    public function loadMetadataForClass(\ReflectionClass $class): ?ClassMetadata
+    public function loadMetadataForClass(\ReflectionClass $class): ?JSMClassMetadata
     {
         if (!$this->isUploadable($class)) {
             return null;

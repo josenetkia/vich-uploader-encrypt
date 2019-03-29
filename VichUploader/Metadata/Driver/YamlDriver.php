@@ -4,7 +4,8 @@ namespace SfCod\VichUploaderEncrypt\VichUploader\Metadata\Driver;
 
 use Metadata\Driver\AbstractFileDriver;
 use Symfony\Component\Yaml\Yaml as YmlParser;
-use Metadata\ClassMetadata;
+use Metadata\ClassMetadata as JSMClassMetadata;
+use Vich\UploaderBundle\Metadata\ClassMetadata;
 
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
@@ -15,7 +16,7 @@ class YamlDriver extends AbstractFileDriver
     /**
      * {@inheritdoc}
      */
-    protected function loadMetadataFromFile(\ReflectionClass $class, string $file): ?ClassMetadata
+    protected function loadMetadataFromFile(\ReflectionClass $class, string $file): ?JSMClassMetadata
     {
         $config = $this->loadMappingFile($file);
         $className = $this->guessClassName($file, $config, $class);

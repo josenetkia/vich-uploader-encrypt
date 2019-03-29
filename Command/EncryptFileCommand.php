@@ -55,6 +55,7 @@ class EncryptFileCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -66,12 +67,11 @@ class EncryptFileCommand extends Command
         $action = $input->getArgument('action');
         $helper = $this->getHelper('question');
         $data = [];
-        foreach ($this->vichUploaderMappings as $key => $mapping)
-        {   
+        foreach ($this->vichUploaderMappings as $key => $mapping) {
             $uploadDestination = $mapping['upload_destination'];
-            
+
             $question = new ChoiceQuestion(
-                sprintf('Do you want to encrypt(%s) files in folder: %s', $key, $uploadDestination),
+                sprintf('Do you want to %s(%s) files in folder: %s', $action, $key, $uploadDestination),
                 ['y', 'n'],
                 'y'
             );
@@ -82,17 +82,16 @@ class EncryptFileCommand extends Command
                 $data[] = $uploadDestination;
             }
         }
-        
+
         if (empty($data)) {
             return;
         }
-        
+
         $finder = new Finder();
         $finder->files()->in($data);
         $progress = new ProgressBar($output, $finder->count());
 
-        foreach($finder as $file)
-        {
+        foreach ($finder as $file) {
             $progress->setMessage($file->getRealPath());
             if ($action === Encryption::ACTION_ENCRYPT) {
                 file_put_contents(
