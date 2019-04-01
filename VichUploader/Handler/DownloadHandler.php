@@ -3,6 +3,7 @@
 namespace SfCod\VichUploaderEncrypt\VichUploader\Handler;
 
 use SfCod\VichUploaderEncrypt\VichUploader\Traits\Encrypt;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Vich\UploaderBundle\Handler\DownloadHandler as BaseHandler;
 use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 use Vich\UploaderBundle\Storage\StorageInterface;
@@ -31,7 +32,8 @@ class DownloadHandler extends BaseHandler
         PropertyMappingFactory $factory,
         StorageInterface $storage,
         Encryption $encryption
-    ) {
+    )
+    {
         parent::__construct($factory, $storage);
         $this->encryption = $encryption;
     }
@@ -40,9 +42,9 @@ class DownloadHandler extends BaseHandler
      * Create a response object that will trigger the download of a file.
      *
      * @param object|array $object
-     * @param string       $field
-     * @param string       $className
-     * @param string|bool  $fileName  True to return original file name
+     * @param string $field
+     * @param string $className
+     * @param string|bool $fileName True to return original file name
      *
      * @return StreamedResponse
      *
@@ -50,7 +52,8 @@ class DownloadHandler extends BaseHandler
      * @throws NoFileFoundException
      * @throws \InvalidArgumentException
      */
-    public function downloadObject($object, string $field, ?string $className = null, $fileName = null, bool $forceDownload = true): StreamedResponse {
+    public function downloadObject($object, string $field, ?string $className = null, $fileName = null, bool $forceDownload = true): StreamedResponse
+    {
         $mapping = $this->getMapping($object, $field, $className);
         if (!$this->isEncryptFile($mapping)) {
             return parent::downloadObject($object, $field, $className, $fileName, $forceDownload);
@@ -61,13 +64,17 @@ class DownloadHandler extends BaseHandler
         }
 
         $responseFileName = !empty($fileName) ? $fileName : $mapping->getFileName($object);
-        $realPath = $mapping->getUploadDestination() . DIRECTORY_SEPARATOR . $mapping->getFileName($object);
+        if ($mapping->getDirectoryNamer()) {
+            $realPath = $mapping->getUploadDestination() . DIRECTORY_SEPARATOR . $mapping->getDirectoryNamer()->directoryName($object, $mapping) . DIRECTORY_SEPARATOR . $mapping->getFileName($object);
+        } else {
+            $realPath = $mapping->getUploadDestination() . DIRECTORY_SEPARATOR . $mapping->getFileName($object);
+        }
 
         if (!file_exists($realPath)) {
             throw new NoFileFoundException(sprintf('No file found in field "%s".', $field));
         }
 
-        return $this->createResponse($realPath, $responseFileName, $mapping->getFile($object), $forceDownload);
+        return $this->createResponse($realPath, $responseFileName, $forceDownload);
     }
 
     /**
@@ -76,21 +83,24 @@ class DownloadHandler extends BaseHandler
      * @param string $realPath
      * @param string $fileName
      * @param null|File $file
+     *
      * @return StreamedResponse
      */
-    protected function createResponse(string $realPath, string $fileName, ?File $file, bool $forceDownload = true): StreamedResponse
+    protected function createResponse(string $realPath, string $fileName, bool $forceDownload = true): StreamedResponse
     {
         $newRealPath = tempnam(sys_get_temp_dir(), 'download_');
         file_put_contents($newRealPath, $this->encryption->decrypt(file_get_contents($realPath)));
+
+        $file = new File($newRealPath, false);
         $mimeType = $file ? $file->getMimeType() : null;
         $handle = fopen($newRealPath, 'rb');
 
-        $response = new StreamedResponse(function() use ($handle) {
+        $response = new StreamedResponse(function () use ($handle) {
             stream_copy_to_stream($handle, fopen('php://output', 'wb'));
         });
 
         $disposition = $response->headers->makeDisposition(
-            $forceDownload ? ResponseHeaderBag::DISPOSITION_ATTACHMENT : ResponseHeaderBag::DISPOSITION_INLINE,
+            ResponseHeaderBag::DISPOSITION_INLINE,
             Transliterator::transliterate($fileName)
         );
         $response->headers->set('Content-Disposition', $disposition);
