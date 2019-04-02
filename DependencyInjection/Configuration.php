@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('encryption_key')
                     ->isRequired()
                 ->end()
-                ->scalarNode('encryption_vi')
+                ->scalarNode('encryption_iv')
                     ->isRequired()
                 ->end()
             ->end()

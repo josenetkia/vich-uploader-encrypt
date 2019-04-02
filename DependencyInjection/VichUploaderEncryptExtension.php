@@ -28,14 +28,14 @@ class VichUploaderEncryptExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        if (empty($config['encryption_key']) || empty($config['encryption_vi'])) {
-            throw new \RuntimeException('You must provide "encryption_key" and "encryption_vi" for VichUploaderEncryptBundle');
+        if (empty($config['encryption_key']) || empty($config['encryption_iv'])) {
+            throw new \RuntimeException('You must provide "encryption_key" and "encryption_iv" for VichUploaderEncryptBundle');
         }
 
         $encryption = new Definition(Encryption::class);
         $encryption->setArguments([
             $config['encryption_key'],
-            $config['encryption_vi'],
+            $config['encryption_iv'],
         ]);
 
         $command = new Definition(EncryptFileCommand::class);
