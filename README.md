@@ -1,26 +1,34 @@
-Install
+## Installation
 
+Install via composer:
 ```
-composer require tobur/vich-uploader-encrypt v0.3
-```
-
-```
-VichUploaderEncryp\VichUploaderEncryptBundle::class => ['all' => true],
+composer require sfcod/vich-uploader-encrypt
 ```
 
+Add bundle to bundles.php:
+```
+return [
+    ...
+    SfCod\VichUploaderEncrypt\VichUploaderEncryptBundle::class => ['all' => true],
+    ...
+];
+```
 
-Create vich_uploader_encryp.yaml for configure bundle:
+
+Create sfcod_vich_uploader_encrypt.yaml config:
 ```
-vich_uploader_encrypt:
-      encryption_key: some key for encrypt
-      encryption_vi: some vi for encrypt
+sfcod_vich_uploader_encrypt:
+  encryption_key: '%env(ENC_U_KEY)%' # key for encryption (string)
+  encryption_iv: '%env(ENC_U_IV)%' # initialization vector for encryption (string)
 ```
-Basic Usage:
+
+## Usage:
 
 ```
-* @UploadableField( 
-* mapping="cv_file", 
-* fileNameProperty="cvName",
-* encrypted=true 
-* )
+use SfCod\VichUploaderEncrypt\VichUploader\Mapping\UploadableField;
+...
+
+/*
+* @UploadableField(mapping="cv_file", fileNameProperty="cvName", encrypted=true)
+*/
 ```
