@@ -59,37 +59,34 @@ class DownloadHandler extends BaseHandler
             return parent::downloadObject($object, $field, $className, $fileName, $forceDownload);
         }
 
+        $stream = $this->storage->resolveStream($object, $field, $className);
+
+        if (null === $stream) {
+            throw new NoFileFoundException(sprintf('No file found in field "%s".', $field));
+        }
+
         if (true === $fileName) {
             $fileName = $mapping->readProperty($object, 'originalName');
         }
 
-        $responseFileName = !empty($fileName) ? $fileName : $mapping->getFileName($object);
-        if ($mapping->getDirectoryNamer()) {
-            $realPath = $mapping->getUploadDestination() . DIRECTORY_SEPARATOR . $mapping->getDirectoryNamer()->directoryName($object, $mapping) . DIRECTORY_SEPARATOR . $mapping->getFileName($object);
-        } else {
-            $realPath = $mapping->getUploadDestination() . DIRECTORY_SEPARATOR . $mapping->getFileName($object);
-        }
+        $fileName = !empty($fileName) ? $fileName : $mapping->getFileName($object);
 
-        if (!file_exists($realPath)) {
-            throw new NoFileFoundException(sprintf('No file found in field "%s".', $field));
-        }
-
-        return $this->createResponse($realPath, $responseFileName, $forceDownload);
+        return $this->createResponse($stream, $fileName, $forceDownload);
     }
 
     /**
      * Create streamed response
      *
-     * @param string $realPath
+     * @param resource $stream
      * @param string $fileName
      * @param null|File $file
      *
      * @return StreamedResponse
      */
-    protected function createResponse(string $realPath, string $fileName, bool $forceDownload = true): StreamedResponse
+    protected function createResponse($stream, string $fileName, bool $forceDownload = true): StreamedResponse
     {
         $newRealPath = tempnam(sys_get_temp_dir(), 'download_');
-        file_put_contents($newRealPath, $this->encryption->decrypt(file_get_contents($realPath)));
+        file_put_contents($newRealPath, $this->encryption->decrypt(stream_get_contents($stream)));
 
         $file = new File($newRealPath, false);
         $mimeType = $file ? $file->getMimeType() : null;
@@ -100,7 +97,7 @@ class DownloadHandler extends BaseHandler
         });
 
         $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_INLINE,
+            $forceDownload ? ResponseHeaderBag::DISPOSITION_ATTACHMENT : ResponseHeaderBag::DISPOSITION_INLINE,
             Transliterator::transliterate($fileName)
         );
         $response->headers->set('Content-Disposition', $disposition);
