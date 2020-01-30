@@ -25,7 +25,7 @@ class VichUploaderEncryptExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
+        $configuration = new VichUploaderEncryptConfiguration();
         $config = $this->processConfiguration($configuration, $configs);
 
         if (empty($config['encryption_key']) || empty($config['encryption_iv'])) {
